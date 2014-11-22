@@ -1,0 +1,15 @@
+---
+- name: Add the webupd8 APT repository key
+  apt_key: data="{{ lookup('file', 'webupd8.key.asc') }}" state=present
+  # Use a static file because right now using just an ID fails
+
+- name: Add the webupd8 APT repository
+  apt_repository: repo="deb http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main" state=present
+
+- name: Automatically select the Oracle License
+  tags: java
+  shell: echo debconf shared/accepted-oracle-license-v1-1 select true | sudo debconf-set-selections
+  changed_when: false
+
+- name: Install Oracle Java
+  apt: pkg=oracle-java7-installer update-cache=yes state=latest
