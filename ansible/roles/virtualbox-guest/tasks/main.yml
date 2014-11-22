@@ -1,0 +1,10 @@
+---
+- name: apt cache
+  apt: update_cache=yes
+
+- name: Install Virtualbox Guest
+  apt: pkg={{ item }} state=latest
+  with_items:
+    - virtualbox-guest-dkms
+    - virtualbox-guest-utils
+    - virtualbox-guest-x11

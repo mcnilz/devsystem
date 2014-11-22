@@ -1,0 +1,17 @@
+[global]
+syslog = 0
+panic action = /usr/share/samba/panic-action %d
+obey pam restrictions = yes
+unix password sync = no
+map to guest = bad user
+usershare allow guests = yes
+security = share
+guest ok = yes
+guest account = {{ devuser | mandatory }}
+
+[{{ devuser | mandatory }}]
+comment = Developer User
+path = /home/{{ devuser | mandatory }}
+writeable = yes
+; browseable = yes
+guest ok = yes

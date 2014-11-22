@@ -1,0 +1,5 @@
+---
+- name: install grunt-cli
+  command: npm install -g grunt-cli
+  args:
+    creates: /usr/local/bin/grunt

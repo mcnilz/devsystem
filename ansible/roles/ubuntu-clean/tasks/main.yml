@@ -1,0 +1,7 @@
+---
+- name: Remove Office Base
+  apt: pkg=libreoffice-base-core state=absent
+
+- name: Remove Office Common
+  apt: pkg=libreoffice-common state=absent
+

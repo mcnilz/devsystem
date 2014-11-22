@@ -1,0 +1,12 @@
+---
+- name: Developer System
+  hosts: local
+  sudo: yes
+  roles:
+    - virtualbox-guest
+    - ubuntu-clean
+    - samba
+    - tools
+    - grunt
+    - bower
+    - composer
