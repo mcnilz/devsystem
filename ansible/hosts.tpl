@@ -3,3 +3,4 @@
 
 [local:vars]
 devuser=TEMPLATE
+devhome=TEMPLATE

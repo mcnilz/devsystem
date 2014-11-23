@@ -11,7 +11,7 @@ guest account = {{ devuser | mandatory }}
 
 [{{ devuser | mandatory }}]
 comment = Developer User
-path = /home/{{ devuser | mandatory }}
+path = "{{ devhome | mandatory }}"
 writeable = yes
 ; browseable = yes
 guest ok = yes

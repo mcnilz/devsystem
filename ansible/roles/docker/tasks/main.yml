@@ -1,0 +1,6 @@
+---
+- name: install docker
+  apt: pkg=docker.io state=latest
+  
+- name: add user to docker group
+  user: "name={{ devuser | mandatory }} groups=docker append=yes"

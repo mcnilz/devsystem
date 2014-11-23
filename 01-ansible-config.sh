@@ -1,2 +1,4 @@
 #!/bin/sh
-sed s/devuser=.*/devuser=`echo $USER`/g ansible/hosts.tpl > ansible/hosts
+
+REPLACE="s,devuser=.*,devuser=`echo $USER`,g;s,devhome=.*,devhome=`echo $HOME`,g"
+sed $REPLACE ansible/hosts.tpl > ansible/hosts

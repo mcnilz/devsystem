@@ -1,22 +1,22 @@
 ---
 - name: create user bin directory
-  shell: mkdir -p /home/{{ devuser | mandatory }}/bin
+  shell: "mkdir -p {{ devhome | mandatory }}/bin"
   args:
-    creates: /home/{{ devuser | mandatory }}/bin
+    creates: "{{ devhome | mandatory }}/bin"
 
 - name: user bin owner
-  file: path=/home/{{ devuser | mandatory }}/bin
+  file: "path={{ devhome | mandatory }}/bin"
   args:
     owner: "{{ devuser | mandatory }}"
     group: "{{ devuser | mandatory }}"
 
 - name: install composer
-  shell: curl -sS https://getcomposer.org/installer | php -- --install-dir=/home/{{ devuser | mandatory }}/bin
+  shell: "curl -sS https://getcomposer.org/installer | php -- --install-dir={{ devhome | mandatory }}/bin"
   args:
-    creates: /home/{{ devuser | mandatory }}/bin/composer.phar
+    creates: "{{ devhome | mandatory }}/bin/composer.phar"
 
 - name: composer owner
-  file: path=/home/{{ devuser | mandatory }}/bin/composer.phar
+  file: "path={{ devhome | mandatory }}/bin/composer.phar"
   args:
     owner: "{{ devuser | mandatory }}"
     group: "{{ devuser | mandatory }}"
