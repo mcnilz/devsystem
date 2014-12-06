@@ -6,13 +6,3 @@
 
 - name: disable nginx default site
   file: path=/etc/nginx/sites-enabled/default state=absent
-
-- name: add nginx devsystem site
-  template: src=devsystem.j2 dest=/etc/nginx/sites-available/devsystem mode=0644
-  notify:
-    - nginx-restart
-
-- name: symlink nginx devsystem site
-  file: src=/etc/nginx/sites-available/devsystem dest=/etc/nginx/sites-enabled/devsystem owner=root group=root state=link
-  notify:
-    - nginx-restart

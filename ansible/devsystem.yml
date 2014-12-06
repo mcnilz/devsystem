@@ -11,5 +11,6 @@
     - bower
     - composer
     - javaoracle
-    - nginx
     - docker
+    - nginx
+    - docker-projects-php

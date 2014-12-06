@@ -1,4 +1,7 @@
+Include {{ devhome | mandatory }}/projects/vhosts/*.conf
+
 <VirtualHost *:80>
+  ServerName localhost
   ServerAdmin root@localhost
   DocumentRoot {{ devhome | mandatory }}/projects
  

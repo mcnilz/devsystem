@@ -1,0 +1,28 @@
+---
+- name: Projects directory
+  file: path={{ devhome | mandatory }}/projects state=directory owner={{ devuser | mandatory }} group={{ devuser | mandatory }} mode=0750
+
+- name: Projects vhosts directory
+  file: path={{ devhome | mandatory }}/projects/vhosts state=directory owner={{ devuser | mandatory }} group={{ devuser | mandatory }} mode=0750
+
+- name: Projects log directory
+  file: path={{ devhome | mandatory }}/projects/log state=directory owner={{ devuser | mandatory }} group={{ devuser | mandatory }} mode=0750
+
+- name: Docker directory
+  file: path={{ devhome | mandatory }}/docker/projects-php state=directory owner={{ devuser | mandatory }} group={{ devuser | mandatory }} mode=0750
+
+- name: Copy dockerfile
+  template: "src=Dockerfile.j2 dest={{ devhome | mandatory }}/docker/projects-php/Dockerfile mode=0640 owner={{ devuser | mandatory }} group={{ devuser | mandatory }}"
+  
+- name: Copy apache conf
+  template: "src=projects-php.conf.j2 dest={{ devhome | mandatory }}/docker/projects-php/default.conf mode=0640 owner={{ devuser | mandatory }} group={{ devuser | mandatory }}"
+  
+- name: add nginx site
+  template: src=projects-php.nginx.j2 dest=/etc/nginx/sites-available/projects-php-base mode=0644
+  notify:
+    - nginx-restart
+
+- name: symlink nginx devsystem site
+  file: src=/etc/nginx/sites-available/projects-php-base dest=/etc/nginx/sites-enabled/projects-php-base owner=root group=root state=link
+  notify:
+    - nginx-restart
