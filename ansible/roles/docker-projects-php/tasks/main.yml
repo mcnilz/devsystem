@@ -19,10 +19,17 @@
   
 - name: add nginx site
   template: src=projects-php.nginx.j2 dest=/etc/nginx/sites-available/projects-php-base mode=0644
-  notify:
-    - nginx-restart
 
 - name: symlink nginx devsystem site
   file: src=/etc/nginx/sites-available/projects-php-base dest=/etc/nginx/sites-enabled/projects-php-base owner=root group=root state=link
   notify:
     - nginx-restart
+
+- name: fig.yml
+  template: "src=fig.yml.j2 dest={{ devhome | mandatory }}/docker/projects-php/fig.yml mode=0640 owner={{ devuser | mandatory }} group={{ devuser | mandatory }}"
+
+- name: vhost template
+  template: "src=vhost.tmpl.j2 dest={{ devhome | mandatory }}/projects/vhosts/vhost.tmpl mode=0640 owner={{ devuser | mandatory }} group={{ devuser | mandatory }}"
+
+- name: vhost add script
+  template: "src=projects-php-vhost-add.sh.j2 dest={{ devhome | mandatory }}/bin/projects-php-vhost-add mode=0700 owner={{ devuser | mandatory }} group={{ devuser | mandatory }}"

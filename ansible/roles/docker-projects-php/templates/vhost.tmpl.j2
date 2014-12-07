@@ -1,0 +1,19 @@
+<VirtualHost *:80>
+  ServerName {SERVERNAME}
+#  ServerAlias example.com
+
+  ServerAdmin root@localhost
+  DocumentRoot {PATH}
+
+  <Directory {PATH}>
+      Options Indexes FollowSymLinks MultiViews
+      AllowOverride All
+      Order deny,allow
+      Allow from all
+      Require all granted
+  </Directory>
+
+  ErrorLog {{ devhome | mandatory }}/projects/log/error.log
+  CustomLog {{ devhome | mandatory }}/projects/log/access.log combined
+
+</VirtualHost>

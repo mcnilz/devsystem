@@ -1,0 +1,6 @@
+projectsphp:
+  build: .
+  ports:
+   - "8081:80"
+  volumes:
+   - {{ devhome | mandatory }}/projects:{{ devhome | mandatory }}/projects

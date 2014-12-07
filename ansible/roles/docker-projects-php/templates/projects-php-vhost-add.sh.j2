@@ -1,0 +1,23 @@
+#!/bin/bash -e
+
+if [ "$#" -ne 1 ]; then
+    echo "First parameter must be the server name."
+    exit 1
+fi
+
+DIR=`pwd`
+FILE={{ devhome | mandatory }}/projects/vhosts/${1}.conf
+
+if [ -f $FILE ]
+then
+    echo $FILE already exists.
+    exit 1
+fi
+
+echo ServerName $1
+echo path $DIR
+echo creating $FILE
+
+SED="s,{SERVERNAME},${1},;s,{PATH},$DIR,"
+
+sed $SED {{ devhome | mandatory }}/projects/vhosts/vhost.tmpl > $FILE
