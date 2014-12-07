@@ -10,3 +10,9 @@
   
 - name: add user to docker group
   user: "name={{ devuser | mandatory }} groups=docker append=yes"
+
+- name: install python pip
+  apt: pkg=python-pip state=latest
+
+- name: docker fig
+  pip: name=fig

@@ -20,3 +20,6 @@
   args:
     owner: "{{ devuser | mandatory }}"
     group: "{{ devuser | mandatory }}"
+
+- name: composer symlink
+  file: "src=composer.phar dest={{ devhome | mandatory }}/bin/composer owner={{ devuser | mandatory }} group={{ devuser | mandatory }} state=link"
