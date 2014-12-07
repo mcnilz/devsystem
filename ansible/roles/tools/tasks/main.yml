@@ -22,5 +22,6 @@
     - nodejs-legacy
     - npm
     - php5-cli
+    - mysql-client-core-5.6
 
 # - include: foobar.yml
