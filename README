@@ -1,0 +1,32 @@
+What to do?
+-----------
+
+1. Run the scripts as user and enter root password when prompted: 
+
+$ 00-ansible-install.sh     (only first time)
+$ 01-ansibile-config.sh     (sometimes if config variables changed)
+$ 02-ansiable-run.sh        (always if ansible playbooks changed)
+$ 03-fuxubuntu.sh           (once if you want, see https://fixubuntu.com/)
+$ 04-netbeans.sh            (once for netbeans)
+
+2. Create a project in $HOME/projects
+
+If you have a wordpress in $HOME/projects/wordpress:
+
+$ cd $HOME/projects/wordpress
+
+Create a vhost in $HOME/projects/vhosts with the helperscript projects-php-vhost-add:
+
+$ projects-php-vhost-add mywordpress.localdomain
+
+$ sudo echo 127.0.0.1 mywordpress.localdomain > /etc/hosts
+
+Start docker images for projects with fig:
+
+$ cd $HOME/docker/projects-php
+$ fig up -d
+
+Open http://mywordpress.localdomain in your browser.
+Database setup is user: develop, password: develop, host: mysql
+
+Have fun.
