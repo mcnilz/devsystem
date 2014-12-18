@@ -11,12 +11,27 @@
 - name: Docker directory
   file: path={{ devhome | mandatory }}/docker/projects-php state=directory owner={{ devuser | mandatory }} group={{ devuser | mandatory }} mode=0750
 
-- name: Copy dockerfile
-  template: "src=Dockerfile.j2 dest={{ devhome | mandatory }}/docker/projects-php/Dockerfile mode=0640 owner={{ devuser | mandatory }} group={{ devuser | mandatory }}"
-  
+- name: Docker php directory
+  file: path={{ devhome | mandatory }}/docker/projects-php/php state=directory owner={{ devuser | mandatory }} group={{ devuser | mandatory }} mode=0750
+
+- name: Copy dockerfile php
+  template: "src=php/Dockerfile.j2 dest={{ devhome | mandatory }}/docker/projects-php/php/Dockerfile mode=0640 owner={{ devuser | mandatory }} group={{ devuser | mandatory }}"
+
 - name: Copy apache conf
-  template: "src=projects-php.conf.j2 dest={{ devhome | mandatory }}/docker/projects-php/default.conf mode=0640 owner={{ devuser | mandatory }} group={{ devuser | mandatory }}"
-  
+  template: "src=php/projects-php.conf.j2 dest={{ devhome | mandatory }}/docker/projects-php/php/default.conf mode=0640 owner={{ devuser | mandatory }} group={{ devuser | mandatory }}"
+
+- name: Docker mysql directory
+  file: path={{ devhome | mandatory }}/docker/projects-php/mysql state=directory owner={{ devuser | mandatory }} group={{ devuser | mandatory }} mode=0750
+
+- name: Copy dockerfile mysql
+  template: "src=mysql/Dockerfile.j2 dest={{ devhome | mandatory }}/docker/projects-php/mysql/Dockerfile mode=0640 owner={{ devuser | mandatory }} group={{ devuser | mandatory }}"
+
+- name: Copy entrypoint mysql
+  template: "src=mysql/docker-entrypoint.sh.j2 dest={{ devhome | mandatory }}/docker/projects-php/mysql/docker-entrypoint.sh mode=0740 owner={{ devuser | mandatory }} group={{ devuser | mandatory }}"
+
+- name: mysql data directory
+  file: path={{ devhome | mandatory }}/projects/mysql/data state=directory owner={{ devuser | mandatory }} group={{ devuser | mandatory }} mode=0750
+
 - name: add nginx site
   template: src=projects-php.nginx.j2 dest=/etc/nginx/sites-available/projects-php-base mode=0644
 
