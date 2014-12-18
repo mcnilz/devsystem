@@ -48,3 +48,9 @@
 
 - name: vhost add script
   template: "src=projects-php-vhost-add.sh.j2 dest={{ devhome | mandatory }}/bin/projects-php-vhost-add mode=0700 owner={{ devuser | mandatory }} group={{ devuser | mandatory }}"
+
+- name: database add script
+  template: "src=projects-php-database-add.sh.j2 dest={{ devhome | mandatory }}/bin/projects-php-database-add mode=0700 owner={{ devuser | mandatory }} group={{ devuser | mandatory }}"
+
+- name: mysql client script
+  template: "src=projects-php-mysql.sh.j2 dest={{ devhome | mandatory }}/bin/projects-php-mysql mode=0700 owner={{ devuser | mandatory }} group={{ devuser | mandatory }}"
