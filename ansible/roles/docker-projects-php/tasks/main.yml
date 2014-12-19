@@ -14,6 +14,13 @@
 - name: Docker php directory
   file: path={{ devhome | mandatory }}/docker/projects-php/php state=directory owner={{ devuser | mandatory }} group={{ devuser | mandatory }} mode=0750
 
+- stat: path={{ devhome | mandatory }}/projects/vhosts/php-projects.ini
+  register: phpprojectsini
+
+- name: Copy php-projects.ini php
+  template: "src=php/php-projects.ini.j2 dest={{ devhome | mandatory }}/projects/vhosts/php-projects.ini mode=0640 owner={{ devuser | mandatory }} group={{ devuser | mandatory }}"
+  when:  not phpprojectsini.stat.exists
+
 - name: Copy dockerfile php
   template: "src=php/Dockerfile.j2 dest={{ devhome | mandatory }}/docker/projects-php/php/Dockerfile mode=0640 owner={{ devuser | mandatory }} group={{ devuser | mandatory }}"
 

@@ -19,6 +19,8 @@ RUN groupadd -r {{ devuser | mandatory }} -g {{ devgid | mandatory }} && \
 RUN sed -i "s/export APACHE_RUN_USER=www-data/export APACHE_RUN_USER={{ devuser | mandatory }}/" /etc/apache2/envvars
 RUN sed -i "s/export APACHE_RUN_GROUP=www-data/export APACHE_RUN_GROUP={{ devuser | mandatory }}/" /etc/apache2/envvars
 
+RUN cd /etc/php5/apache2/conf.d && ln -s {{ devhome | mandatory }}/projects/vhosts/php-projects.ini php-projects.ini
+
 EXPOSE 80
 
 ADD default.conf /etc/apache2/sites-enabled/000-default.conf
