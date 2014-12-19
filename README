@@ -1,32 +1,41 @@
 What to do?
------------
+===========
 
-1. Run the scripts as user and enter root password when prompted: 
+Run the scripts as user and enter root password when prompted: 
+--------------------------------------------------------------
 
-$ 00-ansible-install.sh     (only first time)
-$ 01-ansibile-config.sh     (sometimes if config variables changed)
-$ 02-ansiable-run.sh        (always if ansible playbooks changed)
-$ 03-fuxubuntu.sh           (once if you want, see https://fixubuntu.com/)
-$ 04-netbeans.sh            (once for netbeans)
+ `$ 00-ansible-install.sh`     (only first time)
+ 
+ `$ 01-ansibile-config.sh`     (sometimes if config variables changed)
+ 
+ `$ 02-ansiable-run.sh`        (always if ansible playbooks changed)
+ 
+ `$ 03-fuxubuntu.sh`           (once if you want, see https://fixubuntu.com/)
+ 
+ `$ 04-netbeans.sh`            (once for netbeans)
 
-2. Create a project in $HOME/projects
+Create a project
+----------------
 
-If you have a wordpress in $HOME/projects/wordpress:
+Your projects are placed in `$HOME/projects`.
 
-$ cd $HOME/projects/wordpress
+If you have a wordpress in `$HOME/projects/wordpress`:
 
-Create a vhost in $HOME/projects/vhosts with the helperscript projects-php-vhost-add:
+ `$ cd $HOME/projects/wordpress`
 
-$ projects-php-vhost-add mywordpress.localdomain
+Create a vhost in `$HOME/projects/vhosts` with the helperscript `projects-php-vhost-add`:
 
-$ sudo echo 127.0.0.1 mywordpress.localdomain > /etc/hosts
+ `$ projects-php-vhost-add mywordpress.localdomain`
 
-Start docker images for projects with fig:
+ `$ sudo echo 127.0.0.1 mywordpress.localdomain > /etc/hosts`
 
-$ cd $HOME/docker/projects-php
-$ fig up -d
+Start docker images for projects with `fig`:
 
-Open http://mywordpress.localdomain in your browser.
-Database setup is user: develop, password: develop, host: mysql
+ `$ cd $HOME/docker/projects-php`
+
+ `$ fig up -d`
+
+Open *http://mywordpress.localdomain* in your browser.
+Database setup is *user*: **develop**, *password*: **develop**, *host*: **mysql**
 
 Have fun.
