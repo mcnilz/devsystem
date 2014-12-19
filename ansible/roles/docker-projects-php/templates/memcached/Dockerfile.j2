@@ -1,0 +1,11 @@
+FROM ubuntu:trusty
+MAINTAINER Martin Schnabel <mcnilz@gmail.com>
+ 
+RUN apt-get update
+# RUN apt-get -y upgrade
+
+RUN DEBIAN_FRONTEND=noninteractive apt-get -y install memcached
+
+EXPOSE 11211
+
+CMD /usr/bin/memcached -u nobody

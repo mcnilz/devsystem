@@ -6,6 +6,7 @@ web:
    - {{ devhome | mandatory }}/projects:{{ devhome | mandatory }}/projects
   links: 
    - mysql
+   - memcached
 mysql:
   build: mysql
   environment:
@@ -16,3 +17,5 @@ mysql:
    - "3306:3306"
   volumes:
    - {{ devhome | mandatory }}/projects/mysql/data:/var/lib/mysql
+memcached:
+  build: memcached
