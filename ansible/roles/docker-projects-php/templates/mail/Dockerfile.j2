@@ -1,0 +1,20 @@
+FROM ubuntu:trusty
+MAINTAINER Martin Schnabel <mcnilz@gmail.com>
+
+RUN groupadd -r {{ devuser | mandatory }} -g {{ devgid | mandatory }} && \
+    useradd -u {{ devuid | mandatory }} -r -g {{ devuser | mandatory }} -d {{ devhome | mandatory }} -s /bin/bash -c "Docker image user" {{ devuser | mandatory }} && \
+    mkdir -p {{ devhome | mandatory }} && \
+    chown -R {{ devuser | mandatory }}:{{ devuser | mandatory }} {{ devhome | mandatory }}
+
+RUN apt-get update
+# RUN apt-get -y upgrade
+
+RUN DEBIAN_FRONTEND=noninteractive apt-get -y install postfix postfix-pcre  mutt
+
+RUN echo "/.*/ john" > /etc/postfix/virtual
+RUN sed -i "s,mynetworks =.*,mynetworks = 127.0.0.0/8 172.17.0.0/16 [::ffff:127.0.0.0]/104 [::1]/128," /etc/postfix/main.cf
+RUN echo "virtual_alias_maps = pcre:/etc/postfix/virtual" >> /etc/postfix/main.cf
+
+EXPOSE 25
+
+CMD ["sh", "-c", "service postfix start ; tail -F /var/log/mail.log"]

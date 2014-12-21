@@ -7,6 +7,7 @@ web:
   links: 
    - mysql
    - memcached
+   - mail
 mysql:
   build: mysql
   environment:
@@ -19,3 +20,7 @@ mysql:
    - {{ devhome | mandatory }}/projects/mysql/data:/var/lib/mysql
 memcached:
   build: memcached
+mail:
+  build: mail
+  volumes:
+   - {{ devhome | mandatory }}/projects/mail:/var/mail

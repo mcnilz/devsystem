@@ -5,7 +5,7 @@ RUN apt-get update
 # RUN apt-get -y upgrade
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get -y install apache2 libapache2-mod-php5 php5-mysql php5-gd php-pear php-apc php5-curl \
- curl lynx-cur php5-mcrypt php5-memcache php5-memcached php5-imagick php5-xhprof php5-tidy php5-intl
+ curl lynx-cur php5-mcrypt php5-memcache php5-memcached php5-imagick php5-xhprof php5-tidy php5-intl msmtp
 RUN a2enmod php5
 RUN a2enmod rewrite
 RUN php5enmod mcrypt
@@ -26,8 +26,14 @@ RUN cd /etc/php5/apache2/conf.d && ln -s {{ devhome | mandatory }}/projects/vhos
 RUN locale-gen de_DE && locale-gen de_DE.UTF-8 && locale-gen en_US && locale-gen en_US.UTF-8 && locale-gen en_GB && locale-gen en_GB.UTF-8 && \
     locale-gen fr_FR && locale-gen fr_FR.UTF-8 && locale-gen it_IT && locale-gen it_IT.UTF-8 && update-locale
 
-EXPOSE 80
-
 ADD default.conf /etc/apache2/sites-enabled/000-default.conf
+
+# PHP SMTP MAIL
+ADD msmtprc {{ devhome | mandatory }}/msmtprc
+RUN chown {{ devuser | mandatory }}:{{ devuser | mandatory }} {{ devhome | mandatory }}/msmtprc && \
+    chmod 600 {{ devhome | mandatory }}/msmtprc
+RUN sed -i "s,;sendmail_path =,sendmail_path = /usr/bin/msmtp -C {{ devhome | mandatory }}/msmtprc -t," /etc/php5/apache2/php.ini
+
+EXPOSE 80
 
 CMD /usr/sbin/apache2ctl -D FOREGROUND

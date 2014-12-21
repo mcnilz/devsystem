@@ -8,6 +8,9 @@
 - name: Projects log directory
   file: path={{ devhome | mandatory }}/projects/log state=directory owner={{ devuser | mandatory }} group={{ devuser | mandatory }} mode=0750
 
+- name: Projects mail directory
+  file: path={{ devhome | mandatory }}/projects/mail state=directory owner={{ devuser | mandatory }} group={{ devuser | mandatory }} mode=0750
+
 - name: Docker directory
   file: path={{ devhome | mandatory }}/docker/projects-php state=directory owner={{ devuser | mandatory }} group={{ devuser | mandatory }} mode=0750
 
@@ -20,6 +23,9 @@
 - name: Copy php-projects.ini php
   template: "src=php/php-projects.ini.j2 dest={{ devhome | mandatory }}/projects/vhosts/php-projects.ini mode=0640 owner={{ devuser | mandatory }} group={{ devuser | mandatory }}"
   when:  not phpprojectsini.stat.exists
+
+- name: Copy msmtprc
+  template: "src=php/msmtprc.j2 dest={{ devhome | mandatory }}/docker/projects-php/php/msmtprc mode=0640 owner={{ devuser | mandatory }} group={{ devuser | mandatory }}"
 
 - name: Copy dockerfile php
   template: "src=php/Dockerfile.j2 dest={{ devhome | mandatory }}/docker/projects-php/php/Dockerfile mode=0640 owner={{ devuser | mandatory }} group={{ devuser | mandatory }}"
@@ -45,6 +51,12 @@
 - name: Copy dockerfile memcached
   template: "src=memcached/Dockerfile.j2 dest={{ devhome | mandatory }}/docker/projects-php/memcached/Dockerfile mode=0640 owner={{ devuser | mandatory }} group={{ devuser | mandatory }}"
 
+- name: Docker mail directory
+  file: path={{ devhome | mandatory }}/docker/projects-php/mail state=directory owner={{ devuser | mandatory }} group={{ devuser | mandatory }} mode=0750
+  
+- name: Copy dockerfile mail
+  template: "src=mail/Dockerfile.j2 dest={{ devhome | mandatory }}/docker/projects-php/mail/Dockerfile mode=0640 owner={{ devuser | mandatory }} group={{ devuser | mandatory }}"
+
 - name: add nginx site
   template: src=projects-php.nginx.j2 dest=/etc/nginx/sites-available/projects-php-base mode=0644
 
@@ -67,3 +79,12 @@
 
 - name: mysql client script
   template: "src=projects-php-mysql.sh.j2 dest={{ devhome | mandatory }}/bin/projects-php-mysql mode=0700 owner={{ devuser | mandatory }} group={{ devuser | mandatory }}"
+
+- name: fig script
+  template: "src=projects-php-fig.sh.j2 dest={{ devhome | mandatory }}/bin/projects-php-fig mode=0700 owner={{ devuser | mandatory }} group={{ devuser | mandatory }}"
+
+- name: exec script
+  template: "src=projects-php-exec.sh.j2 dest={{ devhome | mandatory }}/bin/projects-php-exec mode=0700 owner={{ devuser | mandatory }} group={{ devuser | mandatory }}"
+
+- name: mutt script
+  template: "src=projects-php-mutt.sh.j2 dest={{ devhome | mandatory }}/bin/projects-php-mutt mode=0700 owner={{ devuser | mandatory }} group={{ devuser | mandatory }}"
