@@ -1,3 +1,7 @@
 #!/bin/bash -e
 
-docker exec `fig -f {{ devhome | mandatory }}/docker/projects-php/fig.yml ps -q web` "${@}"
+if [[ $PWD/ = {{ devhome | mandatory }}/projects/* ]]; then
+    docker exec -it projectsphp_web_1 {{ devhome | mandatory }}/runindir "$PWD" "${@}"
+else
+    docker exec -it projectsphp_web_1 "${@}"
+fi
