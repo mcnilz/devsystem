@@ -4,7 +4,6 @@
   sudo: yes
   roles:
     - virtualbox-guest
-    - ubuntu-clean
     - samba
     - tools
     - grunt
