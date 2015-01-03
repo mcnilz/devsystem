@@ -1,3 +1,7 @@
 ServerName localhost
 
+AddHandler fcgid-script .php
+FcgidWrapper /usr/bin/php-cgi .php
+FcgidInitialEnv PHP_FCGI_MAX_REQUESTS 10000
+
 Include {{ devhome | mandatory }}/projects/vhosts/*.conf
