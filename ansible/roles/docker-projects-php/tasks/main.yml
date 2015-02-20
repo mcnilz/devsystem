@@ -57,6 +57,12 @@
 - name: Copy dockerfile mail
   template: "src=mail/Dockerfile.j2 dest={{ devhome | mandatory }}/docker/projects-php/mail/Dockerfile mode=0640 owner={{ devuser | mandatory }} group={{ devuser | mandatory }}"
 
+- name: Docker elasticsearch directory
+  file: path={{ devhome | mandatory }}/docker/projects-php/elasticsearch/data state=directory owner={{ devuser | mandatory }} group={{ devuser | mandatory }} mode=0750
+  
+- name: Copy elasticsearch config
+  template: "src=elasticsearch/elasticsearch.yml.j2 dest={{ devhome | mandatory }}/docker/projects-php/elasticsearch/data/elasticsearch.yml mode=0640 owner={{ devuser | mandatory }} group={{ devuser | mandatory }}"
+  
 - name: add nginx site
   template: src=projects-php.nginx.j2 dest=/etc/nginx/sites-available/projects-php-base mode=0644
 
@@ -65,8 +71,8 @@
   notify:
     - nginx-restart
 
-- name: fig.yml
-  template: "src=fig.yml.j2 dest={{ devhome | mandatory }}/docker/projects-php/fig.yml mode=0640 owner={{ devuser | mandatory }} group={{ devuser | mandatory }}"
+- name: docker-compose.yml
+  template: "src=docker-compose.yml.j2 dest={{ devhome | mandatory }}/docker/projects-php/docker-compose.yml mode=0640 owner={{ devuser | mandatory }} group={{ devuser | mandatory }}"
 
 - name: vhost template
   template: "src=vhost.tmpl.j2 dest={{ devhome | mandatory }}/projects/vhosts/vhost.tmpl mode=0640 owner={{ devuser | mandatory }} group={{ devuser | mandatory }}"
@@ -80,8 +86,8 @@
 - name: mysql client script
   template: "src=projects-php-mysql.sh.j2 dest={{ devhome | mandatory }}/bin/projects-php-mysql mode=0700 owner={{ devuser | mandatory }} group={{ devuser | mandatory }}"
 
-- name: fig script
-  template: "src=projects-php-fig.sh.j2 dest={{ devhome | mandatory }}/bin/projects-php-fig mode=0700 owner={{ devuser | mandatory }} group={{ devuser | mandatory }}"
+- name: docker-compose script
+  template: "src=projects-php-docker-compose.sh.j2 dest={{ devhome | mandatory }}/bin/projects-php-docker-compose mode=0700 owner={{ devuser | mandatory }} group={{ devuser | mandatory }}"
 
 - name: exec script
   template: "src=projects-php-exec.sh.j2 dest={{ devhome | mandatory }}/bin/projects-php-exec mode=0700 owner={{ devuser | mandatory }} group={{ devuser | mandatory }}"
