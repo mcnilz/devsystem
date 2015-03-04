@@ -33,5 +33,6 @@
     - php5-curl
     - mysql-client-core-5.6
     - mutt
+    - filezilla
 
 # - include: foobar.yml
