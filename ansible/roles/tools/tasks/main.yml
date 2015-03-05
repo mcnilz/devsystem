@@ -38,3 +38,6 @@
 
 - name: Install uglify
   npm: name=uglify global=yes
+
+- name: Install uglify-js
+  npm: name=uglify-js global=yes
