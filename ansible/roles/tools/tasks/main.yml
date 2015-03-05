@@ -36,4 +36,5 @@
     - mutt
     - filezilla
 
-# - include: foobar.yml
+- name: Install uglify
+  npm: name=uglify global=yes
