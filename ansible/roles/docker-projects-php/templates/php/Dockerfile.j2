@@ -5,7 +5,7 @@ RUN apt-get update
 # RUN apt-get -y upgrade
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get -y install apache2 libapache2-mod-fcgid php5-cgi apache2-mpm-worker php5-mysql php5-gd php-pear php5-xcache php5-curl \
- curl lynx-cur php5-mcrypt php5-memcache php5-memcached php5-imagick php5-xhprof php5-tidy php5-intl msmtp
+ curl lynx-cur php5-mcrypt php5-memcache php5-memcached php5-imagick php5-xhprof php5-tidy php5-intl msmtp graphicsmagick
 RUN a2enmod fcgid
 RUN a2enmod rewrite
 RUN php5enmod mcrypt
