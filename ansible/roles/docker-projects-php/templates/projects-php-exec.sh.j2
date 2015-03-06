@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
 if [[ $PWD/ = {{ devhome | mandatory }}/projects/* ]]; then
-    docker exec -it projectsphp_web_1 sudo -u {{ devuser | mandatory }} {{ devhome | mandatory }}/runindir "$PWD" "${@}"
+    docker exec -it projectsphp_web_1 sudo -E -u {{ devuser | mandatory }} {{ devhome | mandatory }}/runindir "$PWD" "${@}"
 else
     docker exec -it projectsphp_web_1 "${@}"
 fi
