@@ -26,10 +26,9 @@ mail:
   volumes:
    - {{ devhome | mandatory }}/projects/mail:/var/mail
 elasticsearch:
-  image: dockerfile/elasticsearch
+  image: elasticsearch:1.4.4
   ports:
     - "9200:9200"
     - "9300:9300"
   volumes:
-    - "elasticsearch/data:/data"
-  command: "/elasticsearch/bin/elasticsearch -Des.config=/data/elasticsearch.yml"
+    - "elasticsearch/data:/usr/share/elasticsearch/data"

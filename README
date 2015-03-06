@@ -29,11 +29,11 @@ Create a vhost in `$HOME/projects/vhosts` with the helperscript `projects-php-vh
 
  `$ sudo echo 127.0.0.1 mywordpress.localdomain > /etc/hosts`
 
-Start docker images for projects with `fig`:
+Start docker images for projects with `docker-compose`:
 
  `$ cd $HOME/docker/projects-php`
 
- `$ fig up -d`
+ `$ docker-compose up -d`
 
 Open *http://mywordpress.localdomain* in your browser.
 Database setup is *user*: **develop**, *password*: **develop**, *host*: **mysql**
