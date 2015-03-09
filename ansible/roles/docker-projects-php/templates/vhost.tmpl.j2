@@ -13,7 +13,7 @@
       Require all granted
   </Directory>
 
-  ErrorLog {{ devhome | mandatory }}/projects/log/error.log
-  CustomLog {{ devhome | mandatory }}/projects/log/access.log combined
+  ErrorLog /dev/stderr
+  CustomLog /dev/stdout combined
 
 </VirtualHost>
