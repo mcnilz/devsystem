@@ -1,4 +1,11 @@
 ---
+
+- name: Add tortoisehg-ppa key
+  apt_key: keyserver=keyserver.ubuntu.com id=D5056DDE
+
+- name: Add tortoisehg-ppa repository
+  apt_repository: repo='ppa:tortoisehg-ppa/releases'
+
 - name: apt cache
   apt: update_cache=yes
 
