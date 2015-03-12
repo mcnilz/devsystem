@@ -20,7 +20,7 @@ mysql:
   volumes:
    - {{ devhome | mandatory }}/projects/mysql/data:/var/lib/mysql
 memcached:
-  build: memcached
+  image: memcached:1.4.22
 mail:
   build: mail
   volumes:

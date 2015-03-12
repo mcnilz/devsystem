@@ -45,12 +45,6 @@
 - name: mysql data directory
   file: path={{ devhome | mandatory }}/projects/mysql/data state=directory owner={{ devuser | mandatory }} group={{ devuser | mandatory }} mode=0750
 
-- name: Docker memcached directory
-  file: path={{ devhome | mandatory }}/docker/projects-php/memcached state=directory owner={{ devuser | mandatory }} group={{ devuser | mandatory }} mode=0750
-  
-- name: Copy dockerfile memcached
-  template: "src=memcached/Dockerfile.j2 dest={{ devhome | mandatory }}/docker/projects-php/memcached/Dockerfile mode=0640 owner={{ devuser | mandatory }} group={{ devuser | mandatory }}"
-
 - name: Docker mail directory
   file: path={{ devhome | mandatory }}/docker/projects-php/mail state=directory owner={{ devuser | mandatory }} group={{ devuser | mandatory }} mode=0750
   
