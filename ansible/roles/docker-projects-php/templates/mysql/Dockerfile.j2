@@ -28,7 +28,7 @@ RUN { \
 	&& rm -rf /var/lib/mysql && mkdir -p /var/lib/mysql
 
 # comment out a few problematic configuration values
-RUN sed -Ei 's/^(bind-address|log)/#&/' /etc/mysql/my.cnf
+RUN sed -Ei 's/^(bind-address|log|sql_mode)/#&/' /etc/mysql/my.cnf
 
 # VOLUME /var/lib/mysql
 
