@@ -1,5 +1,11 @@
 ---
 
+- name: Add optipng-ppa key
+  apt_key: keyserver=keyserver.ubuntu.com id=D117DE3E
+
+- name: Add optipng/stable-ppa repository
+  apt_repository: repo='ppa:optipng/stable'
+
 - name: Add tortoisehg-ppa key
   apt_key: keyserver=keyserver.ubuntu.com id=D5056DDE
 
@@ -42,9 +48,13 @@
     - mysql-client-core-5.6
     - mutt
     - filezilla
+    - optipng
 
 - name: Install uglify
   npm: name=uglify global=yes
 
 - name: Install uglify-js
   npm: name=uglify-js global=yes
+
+- name: Install svgo
+  npm: name=svgo global=yes
