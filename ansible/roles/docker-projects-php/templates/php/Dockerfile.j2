@@ -8,8 +8,7 @@ RUN apt-get -y upgrade
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get -y install apache2 libapache2-mod-fcgid php5-cgi apache2-mpm-worker php5-mysql php5-gd php-pear php5-xcache php5-curl \
  curl lynx-cur php5-mcrypt php5-memcache php5-memcached php5-imagick php5-xhprof php5-tidy php5-intl msmtp graphicsmagick npm nodejs nodejs-legacy
-RUN a2enmod fcgid
-RUN a2enmod rewrite
+RUN a2enmod fcgid rewrite headers expires
 RUN php5enmod mcrypt
 RUN sed -i "s/short_open_tag = Off/short_open_tag = On/" /etc/php5/cgi/php.ini
 RUN sed -i "s/error_reporting = .*$/error_reporting = E_ERROR | E_WARNING | E_PARSE/" /etc/php5/cgi/php.ini
