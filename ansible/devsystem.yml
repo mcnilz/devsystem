@@ -1,5 +1,5 @@
 ---
-- name: Developer System in Virtualbox
+- name: Developer system
   hosts: local
   sudo: yes
   roles:
