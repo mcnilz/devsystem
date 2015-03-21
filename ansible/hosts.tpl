@@ -6,3 +6,5 @@ devuser=TEMPLATE
 devhome=TEMPLATE
 devuid=TEMPLATE
 devgid=TEMPLATE
+virtualbox_guest_enabled=false
+samba_enabled=false

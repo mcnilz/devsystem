@@ -3,8 +3,8 @@
   hosts: local
   sudo: yes
   roles:
-    - virtualbox-guest
-    - samba
+    - { role: virtualbox-guest, when: virtualbox_guest_enabled }
+    - { role: samba,            when: samba_enabled }
     - tools
     - grunt
     - bower
