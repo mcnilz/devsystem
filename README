@@ -27,7 +27,7 @@ Create a vhost in `$HOME/projects/vhosts` with the helperscript `projects-php-vh
 
  `$ projects-php-vhost-add mywordpress.localdomain`
 
- `$ sudo echo 127.0.0.1 mywordpress.localdomain > /etc/hosts`
+ `$ sudo echo -e "\n127.0.0.1 mywordpress.localdomain" >> /etc/hosts`
 
 Start docker images for projects with `docker-compose`:
 
@@ -35,7 +35,11 @@ Start docker images for projects with `docker-compose`:
 
  `$ docker-compose up -d`
 
+Create a database `wordpress` with the helperscript `projects-php-database-add`
+
+ `$ projects-php-database-add wordpress`
+
 Open *http://mywordpress.localdomain* in your browser.
-Database setup is *user*: **develop**, *password*: **develop**, *host*: **mysql**
+Database setup is *database*: **wordpress**, *user*: **develop**, *password*: **develop**, *host*: **mysql**
 
 Have fun.
