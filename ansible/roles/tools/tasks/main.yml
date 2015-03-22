@@ -2,18 +2,26 @@
 
 - name: Add optipng-ppa key
   apt_key: keyserver=keyserver.ubuntu.com id=D117DE3E
+  when: ansible_distribution == 'Ubuntu' and ansible_distribution_release == 'trusty'
 
 - name: Add optipng/stable-ppa repository
   apt_repository: repo='ppa:optipng/stable'
+  when: ansible_distribution == 'Ubuntu' and ansible_distribution_release == 'trusty'
 
 - name: Add tortoisehg-ppa key
   apt_key: keyserver=keyserver.ubuntu.com id=D5056DDE
+  when: ansible_distribution == 'Ubuntu' and ansible_distribution_release == 'trusty'
 
 - name: Add tortoisehg-ppa repository
   apt_repository: repo='ppa:tortoisehg-ppa/releases'
+  when: ansible_distribution == 'Ubuntu' and ansible_distribution_release == 'trusty'
 
-- name: apt cache
+- name: apt-get upadte
   apt: update_cache=yes
+  
+- name: Install optipng
+  apt: pkg=optipng state=latest
+  when: ansible_distribution == 'Ubuntu' and ansible_distribution_release == 'trusty'
 
 - name: Install common packages
   apt: pkg={{ item }} state=latest
@@ -48,7 +56,6 @@
     - mysql-client-core-5.6
     - mutt
     - filezilla
-    - optipng
 
 - name: Install uglify
   npm: name=uglify global=yes
