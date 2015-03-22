@@ -1,0 +1,6 @@
+---
+- name: Docker directory nginx-proxy
+  file: path={{ devhome | mandatory }}/docker/nginx-proxy state=directory owner={{ devuser | mandatory }} group={{ devuser | mandatory }} mode=0750
+
+- name: docker-compose.yml nginx-proxy
+  template: "src=docker-compose.yml.j2 dest={{ devhome | mandatory }}/docker/nginx-proxy/docker-compose.yml mode=0640 owner={{ devuser | mandatory }} group={{ devuser | mandatory }}"
