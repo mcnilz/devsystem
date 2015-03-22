@@ -5,5 +5,5 @@ if [ "$#" -ne 1 ]; then
     exit 1
 fi
 
-echo "CREATE DATABASE IF NOT EXISTS $1 ;"
-echo "CREATE DATABASE IF NOT EXISTS $1 ;" | mysql -u develop --protocol=TCP -h localhost -P 3306 -pdevelop
+echo "CREATE DATABASE IF NOT EXISTS $1 ; GRANT ALL ON $1.* TO 'develop'@'%' ; "
+echo "CREATE DATABASE IF NOT EXISTS $1 ; GRANT ALL ON $1.* TO 'develop'@'%' ; " | mysql -u root --protocol=TCP -h localhost -P 3306 -proot
