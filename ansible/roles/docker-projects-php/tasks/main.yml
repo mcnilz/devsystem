@@ -56,11 +56,13 @@
   
 - name: add nginx site
   template: src=projects-php.nginx.j2 dest=/etc/nginx/sites-available/projects-php-base mode=0644
+  when: proxy == "nginx"
 
 - name: symlink nginx devsystem site
   file: src=/etc/nginx/sites-available/projects-php-base dest=/etc/nginx/sites-enabled/projects-php-base owner=root group=root state=link
   notify:
     - nginx-restart
+  when: proxy == "nginx"
 
 - name: docker-compose.yml
   template: "src=docker-compose.yml.j2 dest={{ devhome | mandatory }}/docker/projects-php/docker-compose.yml mode=0640 owner={{ devuser | mandatory }} group={{ devuser | mandatory }}"

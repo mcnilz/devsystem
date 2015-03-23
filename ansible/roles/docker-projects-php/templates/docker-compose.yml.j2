@@ -9,6 +9,10 @@ web:
    - memcached
    - mail
    - elasticsearch
+{% if proxy == 'docker-nginx-proxy' %}
+  environment:
+    VIRTUAL_HOST: {{ virtual_host | mandatory }}
+{% endif %}
 mysql:
   build: mysql
   environment:
