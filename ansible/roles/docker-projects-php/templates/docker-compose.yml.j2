@@ -1,7 +1,9 @@
 web:
   build: php
+{% if bind_apache %}
   ports:
-   - "8081:80"
+   - "{{ bind_apache }}:80"
+{% endif %}
   volumes:
    - {{ devhome | mandatory }}/projects:{{ devhome | mandatory }}/projects
   links: 
@@ -20,7 +22,9 @@ mysql:
     MYSQL_USER: "develop"
     MYSQL_PASSWORD: "develop"
   ports:
-   - "3306:3306"
+{% if bind_mysql %}
+   - "{{ bind_mysql }}:3306"
+{% endif %}
   volumes:
    - {{ devhome | mandatory }}/projects/mysql/data:/var/lib/mysql
 memcached:
@@ -32,7 +36,11 @@ mail:
 elasticsearch:
   image: elasticsearch:1.4.4
   ports:
-    - "9200:9200"
-    - "9300:9300"
+{% if bind_elasticsearch_9200 %}
+    - "{{ bind_elasticsearch_9200 }}:9200"
+{% endif %}
+{% if bind_elasticsearch_9300 %}
+    - "{{ bind_elasticsearch_9300 }}:9300"
+{% endif %}
   volumes:
     - "elasticsearch/data:/usr/share/elasticsearch/data"
