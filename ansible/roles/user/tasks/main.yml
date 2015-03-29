@@ -1,0 +1,6 @@
+---
+- name: create user group
+  group: 'name={{ devuser | mandatory }} gid={{ devgid | mandatory }}'
+
+- name: create user
+  user: 'name={{ devuser | mandatory }} uid={{ devuid | mandatory }} group={{ devuser | mandatory }} home={{ devhome | mandatory }}'

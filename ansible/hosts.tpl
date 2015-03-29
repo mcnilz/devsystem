@@ -7,6 +7,9 @@ devhome=TEMPLATE
 devuid=TEMPLATE
 devgid=TEMPLATE
 
+# create user on target system, usefull on fresh created vms
+user_enabled=false
+
 virtualbox_guest_enabled=false
 samba_enabled=false
 tools_enabled=true

@@ -3,6 +3,7 @@
   hosts: local
   sudo: yes
   roles:
+    - { role: user,                when: user_enabled }
     - { role: virtualbox-guest,    when: virtualbox_guest_enabled }
     - { role: samba,               when: samba_enabled }
     - { role: tools,               when: tools_enabled }
