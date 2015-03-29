@@ -15,6 +15,9 @@ bower_enabled=true
 composer_enabled=true
 projects_php_enabled=true
 
+# install tools (composer, uglify) in projects-php image
+projects_php_tools=true
+
 # disable or select java oracle version (ex. oracle-java7-installer)
 java=oracle-java7-installer
 

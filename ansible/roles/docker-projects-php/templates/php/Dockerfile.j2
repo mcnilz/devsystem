@@ -42,6 +42,7 @@ RUN echo '#!/bin/sh' > {{ devhome | mandatory }}/runindir && echo 'cd "$1" && sh
 RUN chown {{ devuser | mandatory }}:{{ devuser | mandatory }} {{ devhome | mandatory }}/runindir && \
     chmod 700 {{ devhome | mandatory }}/runindir
 
+{% if projects_php_tools == 'true' %}
 RUN npm install -g uglify uglify-js
 
 ENV COMPOSER_HOME /usr/local/lib/composer
@@ -51,6 +52,7 @@ RUN mkdir {{ devhome | mandatory }}/bin && \
     chown {{ devuser | mandatory }}:{{ devuser | mandatory }} /usr/local/bin/composer.phar && \
     mkdir -p $COMPOSER_HOME && \
     chown -R {{ devuser | mandatory }}:{{ devuser | mandatory }} $COMPOSER_HOME
+{% endif %}
 
 EXPOSE 80
 
