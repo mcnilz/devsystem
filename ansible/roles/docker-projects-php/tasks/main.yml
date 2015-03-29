@@ -1,4 +1,15 @@
 ---
+- name: create user bin directory
+  shell: "mkdir -p {{ devhome | mandatory }}/bin"
+  args:
+    creates: "{{ devhome | mandatory }}/bin"
+
+- name: user bin owner
+  file: "path={{ devhome | mandatory }}/bin"
+  args:
+    owner: "{{ devuser | mandatory }}"
+    group: "{{ devuser | mandatory }}"
+
 - name: Projects directory
   file: path={{ devhome | mandatory }}/projects state=directory owner={{ devuser | mandatory }} group={{ devuser | mandatory }} mode=0750
 
