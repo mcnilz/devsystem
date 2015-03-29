@@ -12,4 +12,4 @@
   changed_when: false
 
 - name: Install Oracle Java
-  apt: pkg=oracle-java7-installer update-cache=yes state=latest
+  apt: pkg={{ java }} update-cache=yes state=latest

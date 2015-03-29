@@ -3,14 +3,14 @@
   hosts: local
   sudo: yes
   roles:
-    - { role: virtualbox-guest,   when: virtualbox_guest_enabled }
-    - { role: samba,              when: samba_enabled }
-    - tools
-    - grunt
-    - bower
-    - composer
-    - javaoracle
-    - docker
-    - { role: nginx,              when: proxy == "nginx" }
-    - { role: docker-nginx-proxy, when: proxy == "docker-nginx-proxy" }
-    - docker-projects-php
+    - { role: virtualbox-guest,    when: virtualbox_guest_enabled }
+    - { role: samba,               when: samba_enabled }
+    - { role: tools,               when: tools_enabled }
+    - { role: grunt,               when: grunt_enabled }
+    - { role: bower,               when: bower_enabled }
+    - { role: composer,            when: composer_enabled }
+    - { role: javaoracle,          when: java }
+    - { role: docker }
+    - { role: nginx,               when: proxy == "nginx" }
+    - { role: docker-nginx-proxy,  when: proxy == "docker-nginx-proxy" }
+    - { role: docker-projects-php, when: projects_php_enabled }
