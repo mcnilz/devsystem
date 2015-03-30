@@ -29,6 +29,10 @@ mysql:
    - {{ devhome | mandatory }}/projects/mysql/data:/var/lib/mysql
 memcached:
   image: memcached:1.4.22
+{% if bind_memcached %}
+  ports:
+   - "{{ bind_memcached }}:11211"
+{% endif %}
 mail:
   build: mail
   volumes:

@@ -27,6 +27,7 @@ java=oracle-java7-installer
 # bind services
 bind_apache=127.0.0.1:8081
 bind_mysql=0.0.0.0:3306
+bind_memcached=127.0.0.1:11211
 bind_elasticsearch_9200=0.0.0.0:9200
 bind_elasticsearch_9300=0.0.0.0:9300
 
