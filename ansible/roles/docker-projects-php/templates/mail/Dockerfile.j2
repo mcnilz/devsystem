@@ -1,23 +1,21 @@
-FROM ubuntu:trusty
+FROM debian:jessie
 MAINTAINER Martin Schnabel <mcnilz@gmail.com>
 
 RUN groupadd -r {{ devuser | mandatory }} -g {{ devgid | mandatory }} && \
-    useradd -u {{ devuid | mandatory }} -r -g {{ devuser | mandatory }} -d {{ devhome | mandatory }} -s /bin/bash -c "Docker image user" {{ devuser | mandatory }} && \
-    mkdir -p {{ devhome | mandatory }} && \
-    chown -R {{ devuser | mandatory }}:{{ devuser | mandatory }} {{ devhome | mandatory }}
+	useradd -u {{ devuid | mandatory }} -r -g {{ devuser | mandatory }} -d {{ devhome | mandatory }} -s /bin/bash -c "Docker image user" {{ devuser | mandatory }} && \
+	mkdir -p {{ devhome | mandatory }} && \
+	chown -R {{ devuser | mandatory }}:{{ devuser | mandatory }} {{ devhome | mandatory }}
 
-ENV REFRESH_FORCE 2015-03-12
+ENV REFRESH_FORCE 2015-04-01
 
-RUN apt-get update
-RUN apt-get -y upgrade
+RUN apt-get update && \
+	apt-get -y upgrade && \
+	DEBIAN_FRONTEND=noninteractive apt-get -y install postfix postfix-pcre mutt rsyslog
 
-RUN DEBIAN_FRONTEND=noninteractive apt-get -y install postfix postfix-pcre mutt rsyslog
-
-RUN echo "/.*/ john" > /etc/postfix/virtual
-RUN sed -i "s,mynetworks =.*,mynetworks = 127.0.0.0/8 172.17.0.0/16 [::ffff:127.0.0.0]/104 [::1]/128," /etc/postfix/main.cf
-RUN echo "virtual_alias_maps = pcre:/etc/postfix/virtual" >> /etc/postfix/main.cf
-
-RUN touch /var/log/mail.log && chown syslog.adm /var/log/mail.log
+RUN echo "/.*/ {{ devuser | mandatory }}" > /etc/postfix/virtual && \
+	sed -i "s,mynetworks =.*,mynetworks = 127.0.0.0/8 172.17.0.0/16 [::ffff:127.0.0.0]/104 [::1]/128," /etc/postfix/main.cf && \
+	echo "virtual_alias_maps = pcre:/etc/postfix/virtual" >> /etc/postfix/main.cf && \
+	touch /var/log/mail.log
 
 EXPOSE 25
 
