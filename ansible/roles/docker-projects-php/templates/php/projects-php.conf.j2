@@ -4,5 +4,6 @@ AddHandler fcgid-script .php
 FcgidWrapper /usr/bin/php-cgi .php
 FcgidInitialEnv PHP_FCGI_MAX_REQUESTS 10000
 FcgidMaxRequestLen 268435456
+FcgidIOTimeout 240
 
 Include {{ devhome | mandatory }}/projects/vhosts/*.conf

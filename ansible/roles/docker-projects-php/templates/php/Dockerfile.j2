@@ -1,31 +1,62 @@
-FROM ubuntu:trusty
+FROM debian:jessie
 MAINTAINER Martin Schnabel <mcnilz@gmail.com>
 
-ENV REFRESH_FORCE 2015-03-06
+ENV REFRESH_FORCE 2015-04-01
 
-RUN apt-get update
-RUN apt-get -y upgrade
+RUN apt-get update && \
+	apt-get -y upgrade && \
+	DEBIAN_FRONTEND=noninteractive apt-get -y install \
+		apache2 \
+		apache2-mpm-worker \
+		libapache2-mod-fcgid \
+		curl \
+		lynx-cur \
+		php5-cgi \
+		php5-mysql \
+		php5-gd \
+		php-pear \
+		php5-xcache \
+		php5-curl \
+		php5-mcrypt \
+		php5-memcache \
+		php5-memcached \
+		php5-imagick \
+		php5-xhprof \
+		php5-tidy \
+		php5-intl \
+		msmtp \
+		graphicsmagick \
+		npm \
+		nodejs \
+		nodejs-legacy \
+		locales 
 
-RUN DEBIAN_FRONTEND=noninteractive apt-get -y install apache2 libapache2-mod-fcgid php5-cgi apache2-mpm-worker php5-mysql php5-gd php-pear php5-xcache php5-curl \
- curl lynx-cur php5-mcrypt php5-memcache php5-memcached php5-imagick php5-xhprof php5-tidy php5-intl msmtp graphicsmagick npm nodejs nodejs-legacy
-RUN a2enmod fcgid rewrite headers expires
-RUN php5enmod mcrypt
-RUN sed -i "s/short_open_tag = Off/short_open_tag = On/" /etc/php5/cgi/php.ini
-RUN sed -i "s/error_reporting = .*$/error_reporting = E_ERROR | E_WARNING | E_PARSE/" /etc/php5/cgi/php.ini
+RUN dpkg-reconfigure locales && \
+	locale-gen C.UTF-8 && \
+	locale-gen de_DE.UTF-8 && \
+	locale-gen en_US.UTF-8 && \
+	locale-gen en_GB.UTF-8 && \
+	locale-gen fr_FR.UTF-8 && \
+	locale-gen it_IT.UTF-8 && \
+	DEBIAN_FRONTEND=noninteractive /usr/sbin/update-locale
+
+ENV LC_ALL C.UTF-8
+
+RUN a2enmod fcgid rewrite headers expires && \
+	php5enmod mcrypt && \
+	sed -i "s/short_open_tag = Off/short_open_tag = On/" /etc/php5/cgi/php.ini && \
+	sed -i "s/error_reporting = .*$/error_reporting = E_ERROR | E_WARNING | E_PARSE/" /etc/php5/cgi/php.ini
 
 RUN groupadd -r {{ devuser | mandatory }} -g {{ devgid | mandatory }} && \
-    useradd -u {{ devuid | mandatory }} -r -g {{ devuser | mandatory }} -d {{ devhome | mandatory }} -s /bin/bash -c "Docker image user" {{ devuser | mandatory }} && \
-    mkdir -p {{ devhome | mandatory }} && \
-    chown -R {{ devuser | mandatory }}:{{ devuser | mandatory }} {{ devhome | mandatory }} && \
-    chown -R {{ devuser | mandatory }}:{{ devuser | mandatory }} /var/log/apache2 /var/lock/apache2
+	useradd -u {{ devuid | mandatory }} -r -g {{ devuser | mandatory }} -d {{ devhome | mandatory }} -s /bin/bash -c "Docker image user" {{ devuser | mandatory }} && \
+	mkdir -p {{ devhome | mandatory }} && \
+	chown -R {{ devuser | mandatory }}:{{ devuser | mandatory }} {{ devhome | mandatory }} && \
+	chown -R {{ devuser | mandatory }}:{{ devuser | mandatory }} /var/log/apache2 /var/lock/apache2
 
-RUN sed -i "s/export APACHE_RUN_USER=www-data/export APACHE_RUN_USER={{ devuser | mandatory }}/" /etc/apache2/envvars
-RUN sed -i "s/export APACHE_RUN_GROUP=www-data/export APACHE_RUN_GROUP={{ devuser | mandatory }}/" /etc/apache2/envvars
+RUN sed -i "s/export APACHE_RUN_USER=www-data/export APACHE_RUN_USER={{ devuser | mandatory }}/" /etc/apache2/envvars && \
+	sed -i "s/export APACHE_RUN_GROUP=www-data/export APACHE_RUN_GROUP={{ devuser | mandatory }}/" /etc/apache2/envvars
 
 RUN cd /etc/php5/cgi/conf.d && ln -s {{ devhome | mandatory }}/projects/vhosts/php-projects.ini php-projects.ini
-
-RUN locale-gen de_DE && locale-gen de_DE.UTF-8 && locale-gen en_US && locale-gen en_US.UTF-8 && locale-gen en_GB && locale-gen en_GB.UTF-8 && \
-    locale-gen fr_FR && locale-gen fr_FR.UTF-8 && locale-gen it_IT && locale-gen it_IT.UTF-8 && update-locale
 
 ADD default.conf /etc/apache2/sites-enabled/000-default.conf
 RUN chown -R {{ devuser | mandatory }}:{{ devuser | mandatory }} /var/lib/apache2/fcgid
@@ -33,25 +64,23 @@ RUN chown -R {{ devuser | mandatory }}:{{ devuser | mandatory }} /var/lib/apache
 # PHP SMTP MAIL
 ADD msmtprc {{ devhome | mandatory }}/msmtprc
 RUN chown {{ devuser | mandatory }}:{{ devuser | mandatory }} {{ devhome | mandatory }}/msmtprc && \
-    chmod 600 {{ devhome | mandatory }}/msmtprc
-RUN sed -i "s,;sendmail_path =,sendmail_path = /usr/bin/msmtp -C {{ devhome | mandatory }}/msmtprc -t," /etc/php5/cgi/php.ini
+	chmod 600 {{ devhome | mandatory }}/msmtprc && \
+	sed -i "s,;sendmail_path =,sendmail_path = /usr/bin/msmtp -C {{ devhome | mandatory }}/msmtprc -t," /etc/php5/cgi/php.ini
 
 # HELPER SCRIPT FOR projects-php-exec
-
-RUN echo '#!/bin/sh' > {{ devhome | mandatory }}/runindir && echo 'cd "$1" && shift && eval "$@"' >> {{ devhome | mandatory }}/runindir
-RUN chown {{ devuser | mandatory }}:{{ devuser | mandatory }} {{ devhome | mandatory }}/runindir && \
-    chmod 700 {{ devhome | mandatory }}/runindir
+RUN echo '#!/bin/sh' > {{ devhome | mandatory }}/runindir && echo 'cd "$1" && shift && eval "$@"' >> {{ devhome | mandatory }}/runindir && \
+	chown {{ devuser | mandatory }}:{{ devuser | mandatory }} {{ devhome | mandatory }}/runindir && \
+	chmod 700 {{ devhome | mandatory }}/runindir
 
 {% if projects_php_tools == 'true' %}
 RUN npm install -g uglify uglify-js
 
 ENV COMPOSER_HOME /usr/local/lib/composer
-
 RUN mkdir {{ devhome | mandatory }}/bin && \
-    curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin && \
-    chown {{ devuser | mandatory }}:{{ devuser | mandatory }} /usr/local/bin/composer.phar && \
-    mkdir -p $COMPOSER_HOME && \
-    chown -R {{ devuser | mandatory }}:{{ devuser | mandatory }} $COMPOSER_HOME
+	curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin && \
+	chown {{ devuser | mandatory }}:{{ devuser | mandatory }} /usr/local/bin/composer.phar && \
+	mkdir -p $COMPOSER_HOME && \
+	chown -R {{ devuser | mandatory }}:{{ devuser | mandatory }} $COMPOSER_HOME
 {% endif %}
 
 EXPOSE 80
