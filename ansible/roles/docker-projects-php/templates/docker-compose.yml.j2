@@ -10,7 +10,9 @@ web:
    - mysql
    - memcached
    - mail
+{% if projects_php_elasticsearch == 'true' %}
    - elasticsearch
+{% endif %}
 {% if proxy == 'docker-nginx-proxy' %}
   environment:
     VIRTUAL_HOST: {{ virtual_host | mandatory }}
@@ -37,6 +39,7 @@ mail:
   build: mail
   volumes:
    - {{ devhome | mandatory }}/projects/mail:/var/mail
+{% if projects_php_elasticsearch == 'true' %}
 elasticsearch:
   image: elasticsearch:1.4.4
   ports:
@@ -48,3 +51,4 @@ elasticsearch:
 {% endif %}
   volumes:
     - "elasticsearch/data:/usr/share/elasticsearch/data"
+{% endif %}
