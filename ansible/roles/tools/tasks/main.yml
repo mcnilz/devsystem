@@ -7,6 +7,7 @@
 - name: Add optipng/stable-ppa repository
   apt_repository: repo='ppa:optipng/stable'
   when: ansible_distribution == 'Ubuntu' and ansible_distribution_release == 'trusty'
+  register: optpng_repository
 
 - name: Add tortoisehg-ppa key
   apt_key: keyserver=keyserver.ubuntu.com id=D5056DDE
@@ -15,9 +16,11 @@
 - name: Add tortoisehg-ppa repository
   apt_repository: repo='ppa:tortoisehg-ppa/releases'
   when: ansible_distribution == 'Ubuntu' and ansible_distribution_release == 'trusty'
+  register: tortoisehg_repository
 
-- name: apt-get upadte
+- name: apt-get update
   apt: update_cache=yes
+  when: optpng_repository.changed or tortoisehg_repository.changed
   
 - name: Install optipng
   apt: pkg=optipng state=latest

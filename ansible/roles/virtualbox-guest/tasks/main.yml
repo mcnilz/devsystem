@@ -1,6 +1,9 @@
 ---
-- name: apt cache
-  apt: update_cache=yes
+
+# TODO: https://launchpad.net/~costamagnagianfranco/+archive/ubuntu/virtualbox-ppa when ubuntu kernel > 3.13
+
+#- name: apt cache
+#  apt: update_cache=yes
 
 - name: Install Virtualbox Guest
   apt: pkg={{ item }} state=latest
