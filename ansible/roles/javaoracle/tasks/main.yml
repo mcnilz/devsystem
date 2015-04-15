@@ -5,6 +5,11 @@
 
 - name: Add the webupd8 APT repository
   apt_repository: repo="deb http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main" state=present
+  register: webupd8_repository
+
+- name: apt-get update
+  apt: update_cache=yes
+  when: webupd8_repository.changed
 
 - name: Automatically select the Oracle License
   tags: java

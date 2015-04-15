@@ -4,6 +4,11 @@
   
 - name: docker repo
   apt_repository: repo="deb https://get.docker.com/ubuntu docker main" state=present
+  register: docker_repository
+
+- name: apt-get update
+  apt: update_cache=yes
+  when: docker_repository.changed
 
 - name: install docker
   apt: pkg=lxc-docker state=latest
