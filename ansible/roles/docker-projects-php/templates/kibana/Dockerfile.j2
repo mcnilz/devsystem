@@ -1,0 +1,21 @@
+FROM debian:jessie
+MAINTAINER Martin Schnabel <mcnilz@gmail.com>
+
+ENV KIBANA_VERSION 4.0.2
+
+ENV DEBIAN_FRONTEND noninteractive
+
+RUN \
+	apt-get update && \
+	apt-get install -y curl ca-certificates --no-install-recommends && \
+	curl -0 https://download.elasticsearch.org/kibana/kibana/kibana-${KIBANA_VERSION}-linux-x64.tar.gz | tar -zvx && \
+	apt-get remove -y curl ca-certificates && apt-get -y autoremove && \
+	rm -rf /var/lib/apt/lists/*
+
+RUN sed -i "s/localhost:9200/elasticsearch:9200/" /kibana-${KIBANA_VERSION}-linux-x64/config/kibana.yml
+
+EXPOSE 5601
+
+WORKDIR /kibana-${KIBANA_VERSION}-linux-x64
+
+CMD ./bin/kibana

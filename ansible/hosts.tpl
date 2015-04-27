@@ -23,6 +23,8 @@ projects_php_tools=true
 
 # elasticsearch
 projects_php_elasticsearch=true
+# kibana
+projects_php_kibana=false
 
 # disable or select java oracle version (ex. oracle-java7-installer)
 java=oracle-java7-installer
@@ -33,6 +35,7 @@ bind_mysql=0.0.0.0:3306
 bind_memcached=127.0.0.1:11211
 bind_elasticsearch_9200=0.0.0.0:9200
 bind_elasticsearch_9300=0.0.0.0:9300
+bind_kibana=127.0.0.1:5601
 
 # false, nginx or docker-nginx-proxy
 proxy=nginx

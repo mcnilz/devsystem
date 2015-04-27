@@ -51,4 +51,16 @@ elasticsearch:
 {% endif %}
   volumes:
     - "elasticsearch/data:/usr/share/elasticsearch/data"
+
+{% if projects_php_kibana == 'true' %}
+kibana:
+  build: kibana
+  links:
+    - elasticsearch
+{% if bind_kibana %}
+  ports:
+   - "{{ bind_kibana }}:5601"
+{% endif %}
+{% endif %}
+
 {% endif %}
