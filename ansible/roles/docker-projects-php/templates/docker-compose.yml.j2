@@ -41,7 +41,7 @@ mail:
    - {{ devhome | mandatory }}/projects/mail:/var/mail
 {% if projects_php_elasticsearch == 'true' %}
 elasticsearch:
-  image: elasticsearch:1.4.4
+  image: elasticsearch:1.5.1
   ports:
 {% if bind_elasticsearch_9200 %}
     - "{{ bind_elasticsearch_9200 }}:9200"
