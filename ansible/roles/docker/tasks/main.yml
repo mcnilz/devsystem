@@ -27,6 +27,7 @@
 
 - name: install python pip
   apt: pkg=python-pip state=latest
+  when: ansible_distribution == 'Ubuntu'
 
 - name: docker-compose
   pip: name=docker-compose state=latest

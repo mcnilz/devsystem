@@ -1,2 +1,5 @@
 #!/bin/sh
-sudo apt-get install python-pip python2.7-dev python-markupsafe && sudo pip install ansible
+sudo apt-get install python-markupsafe &&
+sudo apt-get remove python-pip &&
+sudo easy_install -U pip &&
+sudo pip install ansible
