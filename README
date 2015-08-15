@@ -4,15 +4,15 @@ What to do?
 Run the scripts as user and enter root password when prompted: 
 --------------------------------------------------------------
 
- `$ 00-ansible-install.sh`     (only first time)
+ `$ 00-ansible-install-[ubuntu/debian].sh` (only first time)
  
- `$ 01-ansibile-config.sh`     (sometimes if config variables changed)
+ `$ 01-ansibile-config.sh`                 (sometimes if config variables changed)
  
- `$ 02-ansiable-run.sh`        (always if ansible playbooks changed)
+ `$ 02-ansiable-run.sh`                    (always if ansible playbooks changed)
  
- `$ 03-fuxubuntu.sh`           (once if you want, see https://fixubuntu.com/)
+ `$ 03-fuxubuntu.sh`                       (once if you want, see https://fixubuntu.com/)
  
- `$ 04-netbeans.sh`            (once for netbeans)
+ `$ 04-netbeans.sh`                        (once for netbeans)
 
 Create a project
 ----------------

@@ -26,8 +26,8 @@ projects_php_elasticsearch=true
 # kibana
 projects_php_kibana=false
 
-# disable or select java oracle version (ex. oracle-java7-installer)
-java=oracle-java7-installer
+# disable or select java oracle version (ex. oracle-java8-installer)
+java=oracle-java8-installer
 
 # bind services
 bind_apache=127.0.0.1:8081
