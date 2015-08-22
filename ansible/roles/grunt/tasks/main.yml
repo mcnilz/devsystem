@@ -1,3 +1,0 @@
----
-- name: install grunt-cli
-  npm: name=grunt-cli global=yes

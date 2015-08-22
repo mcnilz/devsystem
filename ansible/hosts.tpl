@@ -13,8 +13,7 @@ user_enabled=false
 virtualbox_guest_enabled=false
 samba_enabled=false
 tools_enabled=true
-grunt_enabled=true
-bower_enabled=true
+nodejs_enabled=true
 composer_enabled=true
 projects_php_enabled=true
 

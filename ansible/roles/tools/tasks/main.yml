@@ -42,9 +42,6 @@
     - wget
     - spfquery
     - mc
-    - nodejs
-    - nodejs-legacy
-    - npm
     - php5-cli
     - php5-mcrypt
     - php5-memcache
@@ -70,13 +67,3 @@
   with_items:
     - mysql-client
   when: ansible_distribution == 'Debian'
-
-
-- name: Install uglify
-  npm: name=uglify global=yes
-
-- name: Install uglify-js
-  npm: name=uglify-js global=yes
-
-- name: Install svgo
-  npm: name=svgo global=yes

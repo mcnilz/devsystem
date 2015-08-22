@@ -1,0 +1,29 @@
+---
+- name: apt-transport-https
+  apt: pkg=apt-transport-https state=installed
+
+- name: nodesource gpg key
+  apt_key: url=https://deb.nodesource.com/gpgkey/nodesource.gpg.key state=present
+
+- name: nodesource repo
+  apt_repository: repo='deb https://deb.nodesource.com/node_0.12 {{ ansible_distribution_release }} main' state=present
+  register: nodejs_repository
+
+- name: nodesource src repo
+  apt_repository: repo='deb-src https://deb.nodesource.com/node_0.12 {{ ansible_distribution_release }} main' state=present
+
+- name: apt-get update
+  apt: update_cache=yes
+  when: nodejs_repository.changed
+
+- name: nodejs
+  apt: pkg=nodejs=0.12.* state=installed
+
+- name: Install common node packages
+  npm: name={{ item }} global=yes
+  with_items:
+    - bower
+    - grunt-cli
+    - uglify
+    - uglify-js
+    - svgo

@@ -6,9 +6,8 @@
     - { role: user,                when: user_enabled }
     - { role: virtualbox-guest,    when: virtualbox_guest_enabled }
     - { role: samba,               when: samba_enabled }
+    - { role: nodejs,              when: nodejs_enabled } 
     - { role: tools,               when: tools_enabled }
-    - { role: grunt,               when: grunt_enabled }
-    - { role: bower,               when: bower_enabled }
     - { role: composer,            when: composer_enabled }
     - { role: javaoracle,          when: java }
     - { role: docker }
