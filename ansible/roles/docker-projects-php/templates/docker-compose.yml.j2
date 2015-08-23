@@ -50,7 +50,7 @@ elasticsearch:
     - "{{ bind_elasticsearch_9300 }}:9300"
 {% endif %}
   volumes:
-    - "elasticsearch/data:/usr/share/elasticsearch/data"
+    - "./elasticsearch/data:/usr/share/elasticsearch/data"
 
 {% if projects_php_kibana == 'true' %}
 kibana:
