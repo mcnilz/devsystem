@@ -24,3 +24,5 @@ sed $SED {{ devhome | mandatory }}/projects/vhosts/vhost.tmpl > $FILE
 
 echo "Add to /etc/hosts with:"
 echo "sudo bash -c 'echo -e \"\n127.0.0.1 ${1}\" >> /etc/hosts'"
+echo "Restart apache with:"
+echo "docker exec projectsphp_web_1 apache2ctl restart"
