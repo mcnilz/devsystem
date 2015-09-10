@@ -86,4 +86,4 @@ RUN mkdir {{ devhome | mandatory }}/bin && \
 
 EXPOSE 80
 
-CMD /usr/sbin/apache2ctl -D FOREGROUND
+CMD rm -f /var/run/apache2/*.pid && /usr/sbin/apache2ctl -D FOREGROUND
