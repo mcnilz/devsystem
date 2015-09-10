@@ -44,7 +44,7 @@ RUN \
 ENV LC_ALL en_US.UTF-8
 
 RUN a2enmod fcgid rewrite headers expires && \
-	php5enmod mcrypt && \
+	php5enmod mcrypt xhprof && \
 	sed -i "s/short_open_tag = Off/short_open_tag = On/" /etc/php5/cgi/php.ini && \
 	sed -i "s/error_reporting = .*$/error_reporting = E_ERROR | E_WARNING | E_PARSE/" /etc/php5/cgi/php.ini
 
