@@ -60,3 +60,14 @@
 
 - name: docker-compose symlink
   file: "src=docker-compose-1.5.1 dest={{ devhome | mandatory }}/bin/docker-compose owner={{ devuser | mandatory }} group={{ devuser | mandatory }} state=link"
+
+- name: install docker-machine 0.5.1
+  shell: >
+           curl -L https://github.com/docker/machine/releases/download/v0.5.1/docker-machine_linux-amd64.zip > {{ devhome | mandatory }}/bin/machine.zip && \
+           unzip -o {{ devhome | mandatory }}/bin/machine.zip -d {{ devhome | mandatory }}/bin && \
+           rm {{ devhome | mandatory }}/bin/machine.zip && \
+           mv {{ devhome | mandatory }}/bin/docker-machine {{ devhome | mandatory }}/bin/docker-machine-0.5.1 && \
+           ln -s docker-machine-0.5.1 {{ devhome | mandatory }}/bin/docker-machine && \
+           chown {{ devuser | mandatory }}.{{ devuser | mandatory }} {{ devhome | mandatory }}/bin/docker-machine*
+  args:
+    creates: "{{ devhome | mandatory }}/bin/docker-machine-0.5.1"
