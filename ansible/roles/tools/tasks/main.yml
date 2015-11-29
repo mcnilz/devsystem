@@ -53,6 +53,7 @@
     - php5-gd
     - php5-curl
     - php5-mysql
+    - php5-sqlite
     - mutt
     - filezilla
 
